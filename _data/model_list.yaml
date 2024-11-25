@@ -27,7 +27,7 @@ models:
         label: "Long Context"
         color: "#F59E0B"
 
-  - name: "CodeLlama 7b"
+  - name: "CodeLlama 7b Instruct"
     category: "Code LLM"
     description: "Specialized code generation model trained on programming languages and technical documentation"
     tags:
