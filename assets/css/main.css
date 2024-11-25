@@ -172,4 +172,81 @@ body {
     .vertical-divider {
         display: none;
     }
+}
+
+/* Add these to your existing CSS */
+
+.model-full-name {
+    color: var(--text);
+    opacity: 0.8;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--text);
+}
+
+.specs-list, .strengths-list, .hardware-list, .best-practices {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.specs-list li, .strengths-list li, .hardware-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.use-cases {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.use-case {
+    background: var(--gray-light);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.use-case h3 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.example {
+    margin-bottom: 2rem;
+}
+
+.example h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.example p {
+    margin-bottom: 1rem;
+}
+
+.best-practices li {
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.best-practices li::before {
+    content: "•";
+    color: var(--primary);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.requirements {
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.8;
 } 

@@ -2,38 +2,57 @@
 layout: default
 ---
 
+{% assign model_file = page.name | split: "." | first %}
+{% assign model = site.data.models[model_file] %}
+
 <div class="model-detail">
     <div class="container">
         <div class="model-content">
             <!-- Left Column - Model Information -->
             <div class="model-info">
-                <h1>{{ page.model.name }}</h1>
+                <h1>{{ model.name }}</h1>
+                <p class="model-full-name">{{ model.full_name }}</p>
                 
-                <div class="tags">
-                    {% for tag in page.model.tags %}
-                    <span class="tag" style="background: {{ tag.color }}20; color: {{ tag.color }}">
-                        {{ tag.label }}
-                    </span>
-                    {% endfor %}
+                <div class="description">
+                    {{ model.description }}
                 </div>
 
                 <div class="info-section">
-                    <h2>Hardware Requirements</h2>
-                    <ul class="requirements-list">
-                        {% for hw in page.model.hardware %}
-                        <li>{{ hw }}</li>
+                    <h2>Model Specifications</h2>
+                    <ul class="specs-list">
+                        <li>Context Window: {{ model.specs.context_window }} tokens</li>
+                        <li>Model Type: {{ model.specs.model_type }}</li>
+                        <li>Version: {{ model.specs.version }}</li>
+                    </ul>
+
+                    <h2>Key Strengths</h2>
+                    <ul class="strengths-list">
+                        {% for strength in model.strengths %}
+                        <li>{{ strength }}</li>
                         {% endfor %}
                     </ul>
 
                     <h2>Use Cases</h2>
-                    <ul class="use-cases-list">
-                        {% for use_case in page.model.use_cases %}
-                        <li>{{ use_case }}</li>
+                    <div class="use-cases">
+                        {% for use_case in model.use_cases %}
+                        <div class="use-case">
+                            <h3>{{ use_case.name }}</h3>
+                            <p>{{ use_case.description }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <h2>Hardware Requirements</h2>
+                    <ul class="hardware-list">
+                        {% for hw in model.hardware %}
+                        <li>
+                            <strong>{{ hw.name }}</strong>
+                            {% if hw.memory %} - {{ hw.memory }}{% endif %}
+                            {% if hw.requirements %}<br>
+                            <span class="requirements">{{ hw.requirements }}</span>{% endif %}
+                        </li>
                         {% endfor %}
                     </ul>
-
-                    <h2>License</h2>
-                    <p class="license">{{ page.model.license }}</p>
                 </div>
             </div>
 
@@ -44,32 +63,34 @@ layout: default
             <div class="deployment-guide">
                 <h2>Deployment Guide</h2>
                 <div class="deployment-steps">
+                    {% for step in model.deployment.steps %}
                     <div class="step">
-                        <h3>1. Generate authentication token</h3>
+                        <h3>{{ step.name }}</h3>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                            <pre><code>python utils/generate_token.py</code></pre>
+                            <pre><code>{{ step.command }}</code></pre>
                         </div>
                     </div>
+                    {% endfor %}
 
-                    <div class="step">
-                        <h3>2. Start the model</h3>
+                    <h2>Example Usage</h2>
+                    {% for example in model.examples %}
+                    <div class="example">
+                        <h3>{{ example.name }}</h3>
+                        <p>{{ example.description }}</p>
                         <div class="code-block">
                             <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                            <pre><code>./start.sh {{ page.model.name }}</code></pre>
+                            <pre><code>{{ example.code }}</code></pre>
                         </div>
                     </div>
+                    {% endfor %}
 
-                    <div class="step">
-                        <h3>3. Make a request</h3>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                            <pre><code>curl -X POST http://localhost:8000/generate \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"inputs": "What is quantum computing?", "parameters": {"max_new_tokens": 50}}'</code></pre>
-                        </div>
-                    </div>
+                    <h2>Best Practices</h2>
+                    <ul class="best-practices">
+                        {% for practice in model.best_practices %}
+                        <li>{{ practice }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
