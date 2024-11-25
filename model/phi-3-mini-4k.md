@@ -1,4 +1,4 @@
 ---
 layout: model
-name: phi-3-mini-4k
+model: phi-3-mini-4k
 --- 
