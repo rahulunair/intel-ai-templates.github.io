@@ -69,4 +69,33 @@ tags:
   - label: "Instruction"
     color: "#8B5CF6"
   - label: "TGI"
-    color: "#EF4444" 
+    color: "#EF4444"
+
+deployment_steps:
+  - title: "Create Account"
+    description: "Create a standard account on Intel Tiber AI Cloud"
+    link: "https://cloud.intel.com"
+    link_text: "Visit Intel Cloud Portal"
+
+  - title: "Select Hardware"
+    description: "Select an Intel Data Center Max Series GPU VM"
+
+  - title: "Clone Repository"
+    description: "Clone the TGI repository"
+    code: "git clone https://github.com/tiberaicommunity/xpu_tgi"
+
+  - title: "Generate Token"
+    description: "Generate authentication token for secure access"
+    code: "python utils/generate_token.py"
+
+  - title: "Start Model"
+    description: "Start the Phi-3 128k model"
+    code: "./start.sh phi-3-mini-128k"
+
+  - title: "Test Model"
+    description: "Make a test request to verify deployment"
+    code: |
+      curl -X POST http://localhost:8082/generate \
+        -H "Authorization: Bearer YOUR_TOKEN" \
+        -H "Content-Type: application/json" \
+        -d '{"inputs": "Analyze this long document:", "parameters": {"max_new_tokens": 50}}' 

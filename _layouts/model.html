@@ -3,7 +3,6 @@ layout: default
 ---
 
 {% assign model = site.data.models[page.model] %}
-{% assign tgi_template = site.data.templates.tgi_deployment %}
 
 <div class="model-detail-container">
     <div class="model-content-split">
@@ -93,7 +92,7 @@ layout: default
                 
                 <div class="progress-tracker">
                     <div class="progress-bar"></div>
-                    {% for step in tgi_template.deployment_steps %}
+                    {% for step in model.deployment_steps %}
                     <div class="step {% if forloop.first %}active{% endif %}">
                         <div class="step-number">{{ forloop.index }}</div>
                         <div class="step-content">
@@ -105,8 +104,7 @@ layout: default
                                     <span class="copy-icon">📋</span>
                                     <span class="copy-text">Copy</span>
                                 </button>
-                                {% capture code_with_model %}{{ step.code }}{% endcapture %}
-                                <pre><code>{{ code_with_model | replace: "./start.sh {{ model.name }}", "./start.sh " | append: model.name }}</code></pre>
+                                <pre><code>{{ step.code }}</code></pre>
                             </div>
                             {% endif %}
                             {% if step.link %}
