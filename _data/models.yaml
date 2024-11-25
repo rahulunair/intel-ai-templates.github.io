@@ -1,5 +1,5 @@
 models:
-  - name: "Phi-3-mini-4k"
+  - name: "Phi 3 mini 4k"
     category: "LLM"
     description: "Compact 4k context window language model optimized for instruction following and chat"
     hardware:
@@ -22,9 +22,9 @@ models:
     port: 8089
     model_id: "microsoft/Phi-3-mini-4k-instruct"
 
-  - name: "Phi-3-mini-128k"
+  - name: "Phi 3 mini 128k"
     category: "LLM"
-    description: "Extended context window variant of Phi-3 supporting up to 128k tokens"
+    description: "Extended context window variant of Phi 3 supporting up to 128k tokens"
     hardware:
       - "Intel Data Center Max GPU (48GB)"
     tags:
@@ -40,14 +40,14 @@ models:
     license: "MIT"
     use_cases:
       - "Document analysis"
-      - "Long-form content generation"
+      - "Long form content generation"
       - "Code analysis"
     port: 8090
     model_id: "microsoft/Phi-3-mini-128k"
 
-  - name: "OpenHermes-Mistral"
+  - name: "OpenHermes Mistral"
     category: "LLM"
-    description: "Open-source chat model based on Mistral architecture"
+    description: "Open source chat model based on Mistral architecture"
     hardware:
       - "Intel Data Center Max GPU (48GB)"
     tags:

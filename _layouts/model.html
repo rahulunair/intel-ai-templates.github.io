@@ -5,6 +5,7 @@ layout: default
 <div class="model-detail">
     <div class="container">
         <div class="model-content">
+            <!-- Left Column - Model Information -->
             <div class="model-info">
                 <h1>{{ page.model.name }}</h1>
                 
@@ -16,40 +17,74 @@ layout: default
                     {% endfor %}
                 </div>
 
-                <h2>Hardware Requirements</h2>
-                <ul>
-                    {% for hw in page.model.hardware %}
-                    <li>{{ hw }}</li>
-                    {% endfor %}
-                </ul>
+                <div class="info-section">
+                    <h2>Hardware Requirements</h2>
+                    <ul class="requirements-list">
+                        {% for hw in page.model.hardware %}
+                        <li>{{ hw }}</li>
+                        {% endfor %}
+                    </ul>
 
-                <h2>Use Cases</h2>
-                <ul>
-                    {% for use_case in page.model.use_cases %}
-                    <li>{{ use_case }}</li>
-                    {% endfor %}
-                </ul>
+                    <h2>Use Cases</h2>
+                    <ul class="use-cases-list">
+                        {% for use_case in page.model.use_cases %}
+                        <li>{{ use_case }}</li>
+                        {% endfor %}
+                    </ul>
 
-                <h2>License</h2>
-                <p>{{ page.model.license }}</p>
+                    <h2>License</h2>
+                    <p class="license">{{ page.model.license }}</p>
+                </div>
             </div>
 
+            <!-- Vertical Divider -->
+            <div class="vertical-divider"></div>
+
+            <!-- Right Column - Deployment Guide -->
             <div class="deployment-guide">
                 <h2>Deployment Guide</h2>
                 <div class="deployment-steps">
-                    <h3>1. Generate authentication token</h3>
-                    <pre><code>python utils/generate_token.py</code></pre>
+                    <div class="step">
+                        <h3>1. Generate authentication token</h3>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>python utils/generate_token.py</code></pre>
+                        </div>
+                    </div>
 
-                    <h3>2. Start the model</h3>
-                    <pre><code>./start.sh {{ page.model.name }}</code></pre>
+                    <div class="step">
+                        <h3>2. Start the model</h3>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>./start.sh {{ page.model.name }}</code></pre>
+                        </div>
+                    </div>
 
-                    <h3>3. Make a request</h3>
-                    <pre><code>curl -X POST http://localhost:8000/generate \
+                    <div class="step">
+                        <h3>3. Make a request</h3>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                            <pre><code>curl -X POST http://localhost:8000/generate \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"inputs": "What is quantum computing?", "parameters": {"max_new_tokens": 50}}'</code></pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+<script>
+function copyCode(button) {
+    const codeBlock = button.nextElementSibling.querySelector('code');
+    const text = codeBlock.textContent;
+    navigator.clipboard.writeText(text);
+    
+    button.textContent = 'Copied!';
+    setTimeout(() => {
+        button.textContent = 'Copy';
+    }, 2000);
+}
+</script> 
