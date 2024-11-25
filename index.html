@@ -16,7 +16,7 @@ title: Home
     <div class="models-grid">
         {% assign models = site.data.model_list.models %}
         {% for model in models %}
-        <a href="{{ '/models/' | append: model.name | downcase | replace: ' ', '-' | append: '.html' | relative_url }}" class="model-card">
+        <a href="{{ '/model/' | append: model.name | downcase | replace: ' ', '-' | relative_url }}" class="model-card">
             <h3>{{ model.name }}</h3>
             <p>{{ model.description }}</p>
             <div class="tags">
