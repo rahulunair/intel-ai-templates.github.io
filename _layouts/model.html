@@ -20,6 +20,11 @@ layout: default
 
             {% if model.tgi %}
             <section class="architecture-section">
+                <div class="architecture-notice">
+                    ℹ️ This architecture diagram represents a recommended deployment setup using the provided repository. 
+                    Please review the latest documentation and security requirements for your specific use case.
+                </div>
+                
                 <h2>Architecture & Security</h2>
                 <div class="mermaid">
                     {{ model.architecture_diagram }}
@@ -87,12 +92,71 @@ layout: default
             </section>
         </div>
 
-        <!-- Right section (30%) -->
+        <!-- Right section (40%) -->
         <div class="deployment-steps">
             <div class="sticky-content">
                 <h2>Deployment Steps</h2>
-                <div class="code-block">
-                    <pre><code>{{ model.deployment_steps }}</code></pre>
+                
+                <div class="deployment-step">
+                    <p class="step-description">
+                        <span class="step-number">1</span>
+                        Create a standard account on Intel Tiber AI Cloud
+                    </p>
+                    <a href="https://cloud.intel.com" target="_blank" class="button">Visit Intel Cloud Portal</a>
+                </div>
+
+                <div class="deployment-step">
+                    <p class="step-description">
+                        <span class="step-number">2</span>
+                        Select an Intel Data Center Max Series GPU VM
+                    </p>
+                </div>
+
+                <div class="deployment-step">
+                    <p class="step-description">
+                        <span class="step-number">3</span>
+                        Clone the repository
+                    </p>
+                    <div class="code-block">
+                        <button class="copy-button">Copy</button>
+                        <pre><code>git clone https://github.com/tiberaicommunity/xpu_tgi</code></pre>
+                    </div>
+                </div>
+
+                <div class="deployment-step">
+                    <p class="step-description">
+                        <span class="step-number">4</span>
+                        Generate authentication token
+                    </p>
+                    <div class="code-block">
+                        <button class="copy-button">Copy</button>
+                        <pre><code>python utils/generate_token.py</code></pre>
+                    </div>
+                </div>
+
+                <div class="deployment-step">
+                    <p class="step-description">
+                        <span class="step-number">5</span>
+                        Start the model
+                    </p>
+                    <div class="code-block">
+                        <button class="copy-button">Copy</button>
+                        <pre><code>./start.sh phi-3-mini-4k</code></pre>
+                    </div>
+                </div>
+
+                <div class="deployment-step">
+                    <p class="step-description">
+                        <span class="step-number">6</span>
+                        Make a test request
+                    </p>
+                    <div class="code-block">
+                        <button class="copy-button">Copy</button>
+                        <pre><code>curl -X POST http://localhost:8000/generate \
+    -H "Authorization: Bearer YOUR_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"inputs": "Hello, how are you?", "parameters": {"max_new_tokens": 50}}'</code></pre>
+                    </div>
                 </div>
             </div>
         </div>
