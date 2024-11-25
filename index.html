@@ -1,0 +1,32 @@
+---
+layout: default
+title: Home
+---
+
+<div class="hero">
+    <div class="container">
+        <h1>Deploy LLM Models on Intel Data Center GPUs</h1>
+        <div class="search-container">
+            <input type="text" id="modelSearch" placeholder="Search models...">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="models-grid">
+        {% assign models = site.data.models.models %}
+        {% for model in models %}
+        <a href="{{ '/models/' | append: model.name | downcase | replace: ' ', '-' | append: '.html' | relative_url }}" class="model-card">
+            <h3>{{ model.name }}</h3>
+            <p>{{ model.description }}</p>
+            <div class="tags">
+                {% for tag in model.tags %}
+                <span class="tag" style="background: {{ tag.color }}20; color: {{ tag.color }}">
+                    {{ tag.label }}
+                </span>
+                {% endfor %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
