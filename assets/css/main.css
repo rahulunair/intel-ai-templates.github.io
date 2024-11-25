@@ -4,6 +4,7 @@
     --background: #ffffff;
     --text: #1F2937;
     --gray-light: #F3F4F6;
+    --hero-bg: #F8FAFC;
 }
 
 * {
@@ -48,15 +49,19 @@ body {
 }
 
 .model-card {
+    text-decoration: none;
+    color: var(--text);
     background: var(--background);
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
 }
 
 .model-card:hover {
     transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.1);
 }
 
 .model-card h3 {
@@ -249,4 +254,24 @@ body {
     font-size: 0.9rem;
     color: var(--text);
     opacity: 0.8;
+}
+
+/* Update hero section */
+.hero {
+    background: var(--hero-bg);
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--text);
+    opacity: 0.8;
+    margin-bottom: 2rem;
 } 
