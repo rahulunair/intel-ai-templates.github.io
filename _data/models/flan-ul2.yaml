@@ -1,0 +1,76 @@
+name: flan-ul2
+title: Flan-UL2
+model_id: google/flan-ul2
+description: "Google's Flan-UL2 model running on Text Generation Inference (TGI) on Intel XPU. Flan-UL2 excels at instruction-following tasks like translation, summarization, and question answering."
+
+license_notice: "Before using this model, please review the license terms and usage rights on the Hugging Face model page. Ensure your use case complies with the model's terms of use and check for any commercial usage restrictions."
+
+# TGI specific configuration
+tgi: true
+architecture_diagram: |
+  flowchart LR
+      Client([Client])
+      Traefik[Traefik Proxy]
+      Auth[Auth Service]
+      TGI[TGI Service]
+
+      Client --> Traefik
+      Traefik --> Auth
+      Auth --> Traefik
+      Traefik --> TGI
+      TGI --> Traefik
+      Traefik --> Client
+
+      subgraph Internal["Internal Network"]
+          Traefik
+          Auth
+          TGI
+      end
+
+key_features:
+  - "🔒 Token-based authentication with automatic ban after failed attempts"
+  - "🚦 Rate limiting (global: 10 req/s, per-IP: 10 req/s)"
+  - "🛡️ Security headers and IP protection"
+  - "🔄 Health monitoring and automatic recovery"
+  - "🚀 Optimized for Intel GPUs"
+
+# Model specific information
+context_window: "4096 tokens"
+strengths:
+  - "Instruction following"
+  - "Translation tasks"
+  - "Text summarization"
+  - "Structured responses"
+
+use_cases:
+  - "Language translation"
+  - "Text summarization"
+  - "Question answering"
+  - "Classification tasks"
+
+configuration: |
+  MODEL_NAME=flan-ul2-tgi
+  MODEL_ID=google/flan-ul2
+  TGI_VERSION=2.4.0-intel-xpu
+  PORT=8083
+  SHM_SIZE=8g
+  MAX_CONCURRENT_REQUESTS=10
+  MAX_BATCH_SIZE=1
+  MAX_TOTAL_TOKENS=4096
+  MAX_INPUT_LENGTH=2039
+  MAX_WAITING_TOKENS=20
+
+# Tags for filtering
+tags:
+  - label: "Transformer"
+    color: "#3B82F6"
+  - label: "4K context"
+    color: "#10B981"
+  - label: "Instruction"
+    color: "#8B5CF6"
+  - label: "TGI"
+    color: "#EF4444"
+  - label: "Google"
+    color: "#34D399"
+  - label: "Translation"
+    color: "#F472B6" 
