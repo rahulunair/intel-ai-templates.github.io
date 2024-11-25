@@ -29,23 +29,24 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateActiveTags() {
         activeTagsContainer.innerHTML = '';
         activeTags.forEach(tag => {
-            const tagEl = document.createElement('span');
+            const tagEl = document.createElement('div');
             tagEl.className = 'active-tag';
             tagEl.innerHTML = `
                 ${tag}
-                <button onclick="removeTag('${tag}')">&times;</button>
+                <button class="remove-tag" onclick="removeTag('${tag}')">&times;</button>
             `;
+            tagEl.addEventListener('click', () => removeTag(tag));
             activeTagsContainer.appendChild(tagEl);
         });
     }
 
     window.removeTag = function(tag) {
-        activeTags.delete(tag);
+        activeTags.delete(tag.toLowerCase());
         updateActiveTags();
         filterCards();
-        // Update tag buttons active state
+        
         document.querySelectorAll('.tag').forEach(tagBtn => {
-            if (tagBtn.textContent.toLowerCase() === tag) {
+            if (tagBtn.textContent.toLowerCase() === tag.toLowerCase()) {
                 tagBtn.classList.remove('active');
             }
         });
