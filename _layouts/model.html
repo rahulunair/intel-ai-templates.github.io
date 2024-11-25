@@ -2,29 +2,31 @@
 layout: default
 ---
 
+{% assign model = site.data.models[page.name] %}
+
 <div class="model-detail-container">
     <div class="model-content-split">
         <!-- Left section (70%) -->
         <div class="model-description">
-            <h1>{{ page.title }}</h1>
-            <p class="model-intro">{{ page.description }}</p>
+            <h1>{{ model.title }}</h1>
+            <p class="model-intro">{{ model.description }}</p>
             
-            {% if page.license_notice %}
+            {% if model.license_notice %}
             <div class="license-notice">
-                ⚠️ {{ page.license_notice }}
+                ⚠️ {{ model.license_notice }}
             </div>
             {% endif %}
 
-            {% if page.tgi %}
+            {% if model.tgi %}
             <section class="architecture-section">
                 <h2>Architecture & Security</h2>
                 <div class="mermaid">
-                    {{ page.architecture_diagram }}
+                    {{ model.architecture_diagram }}
                 </div>
                 
                 <h3>Key Features</h3>
                 <ul class="feature-list">
-                    {% for feature in page.key_features %}
+                    {% for feature in model.key_features %}
                     <li>{{ feature }}</li>
                     {% endfor %}
                 </ul>
@@ -35,23 +37,23 @@ layout: default
                 <h2>Model Information</h2>
                 <div class="info-grid">
                     <div>
-                        <strong>Model:</strong> {{ page.model_id }}
+                        <strong>Model:</strong> {{ model.model_id }}
                     </div>
                     <div>
-                        <strong>Context Window:</strong> {{ page.context_window }}
+                        <strong>Context Window:</strong> {{ model.context_window }}
                     </div>
                 </div>
 
                 <h3>Strengths</h3>
                 <ul>
-                    {% for strength in page.strengths %}
+                    {% for strength in model.strengths %}
                     <li>{{ strength }}</li>
                     {% endfor %}
                 </ul>
 
                 <h3>Optimal Use Cases</h3>
                 <ul>
-                    {% for use_case in page.use_cases %}
+                    {% for use_case in model.use_cases %}
                     <li>{{ use_case }}</li>
                     {% endfor %}
                 </ul>
@@ -60,13 +62,13 @@ layout: default
             <section class="configuration">
                 <h2>Configuration</h2>
                 <div class="code-block">
-                    <pre><code>{{ page.configuration }}</code></pre>
+                    <pre><code>{{ model.configuration }}</code></pre>
                 </div>
             </section>
 
             <section class="usage-examples">
                 <h2>Example Usage</h2>
-                {% for example in page.examples %}
+                {% for example in model.examples %}
                 <h3>{{ example.title }}</h3>
                 <div class="code-block">
                     <pre><code>{{ example.code }}</code></pre>
@@ -77,7 +79,7 @@ layout: default
             <section class="best-practices">
                 <h2>Best Practices</h2>
                 <ul>
-                    {% for practice in page.best_practices %}
+                    {% for practice in model.best_practices %}
                     <li>{{ practice }}</li>
                     {% endfor %}
                 </ul>
@@ -89,7 +91,7 @@ layout: default
             <div class="sticky-content">
                 <h2>Deployment Steps</h2>
                 <div class="code-block">
-                    <pre><code>{{ page.deployment_steps }}</code></pre>
+                    <pre><code>{{ model.deployment_steps }}</code></pre>
                 </div>
             </div>
         </div>
