@@ -1,20 +1,82 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('modelSearch');
-    if (!searchInput) return;
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const tags = document.querySelectorAll('.tag');
+    const activeTagsContainer = document.querySelector('.active-tags');
+    
+    let activeCategory = 'all';
+    let activeTags = new Set();
 
-    searchInput.addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
+    function filterCards() {
+        const searchTerm = searchInput.value.toLowerCase();
         const modelCards = document.querySelectorAll('.model-card');
 
         modelCards.forEach(card => {
             const modelName = card.querySelector('h3').textContent.toLowerCase();
-            const tags = Array.from(card.querySelectorAll('.tag'))
+            const cardTags = Array.from(card.querySelectorAll('.tag'))
                 .map(tag => tag.textContent.toLowerCase());
+            const category = card.dataset.category;
 
-            const isVisible = modelName.includes(searchTerm) || 
-                            tags.some(tag => tag.includes(searchTerm));
-            
-            card.style.display = isVisible ? 'block' : 'none';
+            const matchesSearch = modelName.includes(searchTerm);
+            const matchesCategory = activeCategory === 'all' || category === activeCategory;
+            const matchesTags = activeTags.size === 0 || 
+                              cardTags.some(tag => activeTags.has(tag.toLowerCase()));
+
+            card.style.display = (matchesSearch && matchesCategory && matchesTags) ? 'block' : 'none';
+        });
+    }
+
+    function updateActiveTags() {
+        activeTagsContainer.innerHTML = '';
+        activeTags.forEach(tag => {
+            const tagEl = document.createElement('span');
+            tagEl.className = 'active-tag';
+            tagEl.innerHTML = `
+                ${tag}
+                <button onclick="removeTag('${tag}')">&times;</button>
+            `;
+            activeTagsContainer.appendChild(tagEl);
+        });
+    }
+
+    window.removeTag = function(tag) {
+        activeTags.delete(tag);
+        updateActiveTags();
+        filterCards();
+        // Update tag buttons active state
+        document.querySelectorAll('.tag').forEach(tagBtn => {
+            if (tagBtn.textContent.toLowerCase() === tag) {
+                tagBtn.classList.remove('active');
+            }
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('input', filterCards);
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCategory = btn.dataset.category;
+            filterCards();
+        });
+    });
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tagText = tag.textContent.toLowerCase();
+            if (activeTags.has(tagText)) {
+                activeTags.delete(tagText);
+                tag.classList.remove('active');
+            } else {
+                activeTags.add(tagText);
+                tag.classList.add('active');
+            }
+            updateActiveTags();
+            filterCards();
         });
     });
 }); 

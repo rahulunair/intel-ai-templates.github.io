@@ -8,26 +8,51 @@ title: Home
         <h1>AI Templates</h1>
         <p>Deploy AI models on Intel Tiber AI cloud with ease</p>
         <div class="search-container">
-            <input type="text" id="modelSearch" placeholder="Search models...">
+            <div class="search-box">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" id="modelSearch" placeholder="Search models...">
+            </div>
         </div>
     </div>
 </div>
 
 <div class="container">
+    <div class="category-filters">
+        <button class="filter-btn active" data-category="all">All Models</button>
+        <button class="filter-btn" data-category="LLM">LLMs</button>
+        <button class="filter-btn" data-category="Code LLM">Code Models</button>
+    </div>
+    
+    <div class="active-tags"></div>
+    
     <div class="models-grid">
         {% assign models = site.data.model_list.models %}
         {% for model in models %}
-        <a href="{{ '/model/' | append: model.name | downcase | replace: ' ', '-' | relative_url }}" class="model-card">
-            <h3>{{ model.name }}</h3>
-            <p>{{ model.description }}</p>
-            <div class="tags">
-                {% for tag in model.tags %}
-                <span class="tag" style="background: {{ tag.color }}20; color: {{ tag.color }}">
-                    {{ tag.label }}
-                </span>
-                {% endfor %}
+        <div class="model-card" data-category="{{ model.category }}">
+            <div class="model-card-content">
+                <h3>{{ model.name }}</h3>
+                <p>{{ model.description }}</p>
+                <div class="tags">
+                    {% for tag in model.tags %}
+                    <button class="tag" 
+                            data-tag="{{ tag.label | downcase }}"
+                            style="background: {{ tag.color }}10; color: {{ tag.color }}; border: 1px solid {{ tag.color }}20;">
+                        {{ tag.label }}
+                    </button>
+                    {% endfor %}
+                </div>
             </div>
-        </a>
+            <div class="model-card-footer">
+                <a href="{{ '/model/' | append: model.name | downcase | replace: ' ', '-' | relative_url }}" class="view-details">
+                    View Details
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
