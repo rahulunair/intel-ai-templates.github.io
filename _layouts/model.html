@@ -105,7 +105,8 @@ layout: default
                                     <span class="copy-icon">📋</span>
                                     <span class="copy-text">Copy</span>
                                 </button>
-                                <pre><code>{{ step.code | replace: "{{ model.name }}", model.name }}</code></pre>
+                                {% capture code_with_model %}{{ step.code }}{% endcapture %}
+                                <pre><code>{{ code_with_model | replace: "./start.sh {{ model.name }}", "./start.sh " | append: model.name }}</code></pre>
                             </div>
                             {% endif %}
                             {% if step.link %}
