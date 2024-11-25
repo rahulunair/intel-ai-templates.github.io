@@ -2,8 +2,8 @@
 layout: default
 ---
 
-{% assign model_file = page.name | split: "." | first %}
-{% assign model = site.data.models[model_file] %}
+{% assign model_name = page.name | split: "." | first %}
+{% assign model = site.data.models[model_name] %}
 
 <div class="model-detail">
     <div class="container">
