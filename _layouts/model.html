@@ -2,13 +2,6 @@
 layout: default
 ---
 
-<!-- Debug output -->
-<div style="background: #f0f0f0; padding: 10px; margin: 10px 0;">
-    <p>Debug Info:</p>
-    <p>Page name: {{ page.name }}</p>
-    <p>Direct access test: {{ site.data.models['phi-3-mini-4k'].title }}</p>
-    <p>All models data: {{ site.data.models | jsonify }}</p>
-</div>
 
 {% assign model = site.data.models['phi-3-mini-4k'] %}
 
