@@ -7,163 +7,146 @@ layout: default
 
 <div class="model-detail-container">
     <div class="model-content-split">
-        <!-- Left section (70%) -->
+        <!-- Left section (60%) -->
         <div class="model-description">
-            <h1>{{ model.title }}</h1>
-            <p class="model-intro">{{ model.description }}</p>
-            
-            {% if model.license_notice %}
-            <div class="license-notice">
-                ⚠️ {{ model.license_notice }}
+            <!-- Quick Overview Section -->
+            <div class="model-header">
+                <h1>{{ model.title }}</h1>
+                <div class="model-tags">
+                    {% for tag in model.tags %}
+                    <span class="tag" style="background-color: {{ tag.color }}20; color: {{ tag.color }}">
+                        {{ tag.label }}
+                    </span>
+                    {% endfor %}
+                </div>
+                <p class="model-intro">{{ model.description }}</p>
+                {% if model.license_notice %}
+                <div class="license-notice">
+                    ⚠️ {{ model.license_notice }}
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
+
+            <!-- Key Information Cards -->
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3>📊 Model Specs</h3>
+                    <ul>
+                        <li><strong>Model ID:</strong> {{ model.model_id }}</li>
+                        <li><strong>Context Window:</strong> {{ model.context_window }}</li>
+                        <li><strong>Hardware:</strong> Intel Data Center GPU Max Series</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>💪 Strengths</h3>
+                    <ul>
+                        {% for strength in model.strengths %}
+                        <li>{{ strength }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3>🎯 Use Cases</h3>
+                    <ul>
+                        {% for use_case in model.use_cases %}
+                        <li>{{ use_case }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
 
             {% if model.tgi %}
+            <!-- Architecture Section -->
             <section class="architecture-section">
-                <div class="architecture-notice">
-                    ℹ️ This architecture diagram represents a recommended deployment setup using the provided repository. 
-                    Please review the latest documentation and security requirements for your specific use case.
+                <div class="section-header">
+                    <h2>Deployment Architecture</h2>
+                    <div class="architecture-notice">
+                        <div class="notice-icon">ℹ️</div>
+                        <div class="notice-content">
+                            <strong>Reference Architecture:</strong> This represents a recommended setup using the provided repository.
+                            Always review the latest documentation for your specific use case.
+                        </div>
+                    </div>
                 </div>
-                
-                <h2>Architecture & Security</h2>
                 <div class="mermaid">
                     {{ model.architecture_diagram }}
                 </div>
-                
-                <h3>Key Features</h3>
-                <ul class="feature-list">
-                    {% for feature in model.key_features %}
-                    <li>{{ feature }}</li>
-                    {% endfor %}
-                </ul>
+                <div class="security-features">
+                    <h3>Security & Performance Features</h3>
+                    <div class="feature-grid">
+                        {% for feature in model.key_features %}
+                        <div class="feature-card">{{ feature }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
             </section>
             {% endif %}
 
-            <section class="model-info">
-                <h2>Model Information</h2>
-                <div class="info-grid">
-                    <div>
-                        <strong>Model:</strong> {{ model.model_id }}
+            <!-- Configuration & Examples -->
+            <section class="usage-section">
+                <h2>Usage Examples</h2>
+                <div class="tabs">
+                    <button class="tab active" data-tab="code">Code Generation</button>
+                    <button class="tab" data-tab="math">Mathematical Reasoning</button>
+                    <button class="tab" data-tab="qa">Q&A</button>
+                </div>
+                <div class="tab-content">
+                    {% for example in model.examples %}
+                    <div class="example-block" data-tab="{{ example.type }}">
+                        <h3>{{ example.title }}</h3>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Request</span>
+                                <button class="copy-button">Copy</button>
+                            </div>
+                            <pre><code>{{ example.code }}</code></pre>
+                        </div>
                     </div>
-                    <div>
-                        <strong>Context Window:</strong> {{ model.context_window }}
-                    </div>
-                </div>
-
-                <h3>Strengths</h3>
-                <ul>
-                    {% for strength in model.strengths %}
-                    <li>{{ strength }}</li>
                     {% endfor %}
-                </ul>
-
-                <h3>Optimal Use Cases</h3>
-                <ul>
-                    {% for use_case in model.use_cases %}
-                    <li>{{ use_case }}</li>
-                    {% endfor %}
-                </ul>
-            </section>
-
-            <section class="configuration">
-                <h2>Configuration</h2>
-                <div class="code-block">
-                    <pre><code>{{ model.configuration }}</code></pre>
                 </div>
-            </section>
-
-            <section class="usage-examples">
-                <h2>Example Usage</h2>
-                {% for example in model.examples %}
-                <h3>{{ example.title }}</h3>
-                <div class="code-block">
-                    <pre><code>{{ example.code }}</code></pre>
-                </div>
-                {% endfor %}
-            </section>
-
-            <section class="best-practices">
-                <h2>Best Practices</h2>
-                <ul>
-                    {% for practice in model.best_practices %}
-                    <li>{{ practice }}</li>
-                    {% endfor %}
-                </ul>
             </section>
         </div>
 
         <!-- Right section (40%) -->
         <div class="deployment-steps">
             <div class="sticky-content">
-                <h2>Deployment Steps</h2>
+                <div class="deployment-header">
+                    <h2>Quick Start Guide</h2>
+                    <p>Get up and running in minutes</p>
+                </div>
                 
-                <div class="deployment-step">
-                    <p class="step-description">
-                        <span class="step-number">1</span>
-                        Create a standard account on Intel Tiber AI Cloud
-                    </p>
-                    <a href="https://cloud.intel.com" target="_blank" class="button">Visit Intel Cloud Portal</a>
-                </div>
-
-                <div class="deployment-step">
-                    <p class="step-description">
-                        <span class="step-number">2</span>
-                        Select an Intel Data Center Max Series GPU VM
-                    </p>
-                </div>
-
-                <div class="deployment-step">
-                    <p class="step-description">
-                        <span class="step-number">3</span>
-                        Clone the repository
-                    </p>
-                    <div class="code-block">
-                        <button class="copy-button">Copy</button>
-                        <pre><code>git clone https://github.com/tiberaicommunity/xpu_tgi</code></pre>
+                <div class="progress-tracker">
+                    <div class="progress-bar"></div>
+                    {% for step in model.deployment_steps %}
+                    <div class="step {% if forloop.first %}active{% endif %}">
+                        <div class="step-number">{{ forloop.index }}</div>
+                        <div class="step-content">
+                            <h3>{{ step.title }}</h3>
+                            <p>{{ step.description }}</p>
+                            {% if step.code %}
+                            <div class="code-block">
+                                <button class="copy-button" data-clipboard-text="{{ step.code }}">
+                                    <span class="copy-icon">📋</span>
+                                    <span class="copy-text">Copy</span>
+                                </button>
+                                <pre><code>{{ step.code }}</code></pre>
+                            </div>
+                            {% endif %}
+                            {% if step.link %}
+                            <a href="{{ step.link }}" class="step-link" target="_blank">
+                                {{ step.link_text }} →
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-
-                <div class="deployment-step">
-                    <p class="step-description">
-                        <span class="step-number">4</span>
-                        Generate authentication token
-                    </p>
-                    <div class="code-block">
-                        <button class="copy-button">Copy</button>
-                        <pre><code>python utils/generate_token.py</code></pre>
-                    </div>
-                </div>
-
-                <div class="deployment-step">
-                    <p class="step-description">
-                        <span class="step-number">5</span>
-                        Start the model
-                    </p>
-                    <div class="code-block">
-                        <button class="copy-button">Copy</button>
-                        <pre><code>./start.sh phi-3-mini-4k</code></pre>
-                    </div>
-                </div>
-
-                <div class="deployment-step">
-                    <p class="step-description">
-                        <span class="step-number">6</span>
-                        Make a test request
-                    </p>
-                    <div class="code-block">
-                        <button class="copy-button">Copy</button>
-                        <pre><code>curl -X POST http://localhost:8000/generate \
-    -H "Authorization: Bearer YOUR_TOKEN" \
-    -H "Content-Type: application/json" \
-    -d '{"inputs": "Hello, how are you?", "parameters": {"max_new_tokens": 50}}'</code></pre>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Include Mermaid for diagrams -->
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>
     mermaid.initialize({ startOnLoad: true });
