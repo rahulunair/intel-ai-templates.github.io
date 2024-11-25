@@ -2,110 +2,102 @@
 layout: default
 ---
 
-{% assign model_name = page.name | split: "." | first %}
-{% assign model = site.data.models[model_name] %}
-
-<div class="model-detail">
-    <div class="container">
-        <div class="model-content">
-            <!-- Left Column - Model Information -->
-            <div class="model-info">
-                <h1>{{ model.name }}</h1>
-                <p class="model-full-name">{{ model.full_name }}</p>
-                
-                <div class="description">
-                    {{ model.description }}
-                </div>
-
-                <div class="info-section">
-                    <h2>Model Specifications</h2>
-                    <ul class="specs-list">
-                        <li>Context Window: {{ model.specs.context_window }} tokens</li>
-                        <li>Model Type: {{ model.specs.model_type }}</li>
-                        <li>Version: {{ model.specs.version }}</li>
-                    </ul>
-
-                    <h2>Key Strengths</h2>
-                    <ul class="strengths-list">
-                        {% for strength in model.strengths %}
-                        <li>{{ strength }}</li>
-                        {% endfor %}
-                    </ul>
-
-                    <h2>Use Cases</h2>
-                    <div class="use-cases">
-                        {% for use_case in model.use_cases %}
-                        <div class="use-case">
-                            <h3>{{ use_case.name }}</h3>
-                            <p>{{ use_case.description }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-
-                    <h2>Hardware Requirements</h2>
-                    <ul class="hardware-list">
-                        {% for hw in model.hardware %}
-                        <li>
-                            <strong>{{ hw.name }}</strong>
-                            {% if hw.memory %} - {{ hw.memory }}{% endif %}
-                            {% if hw.requirements %}<br>
-                            <span class="requirements">{{ hw.requirements }}</span>{% endif %}
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+<div class="model-detail-container">
+    <div class="model-content-split">
+        <!-- Left section (70%) -->
+        <div class="model-description">
+            <h1>{{ page.title }}</h1>
+            <p class="model-intro">{{ page.description }}</p>
+            
+            {% if page.license_notice %}
+            <div class="license-notice">
+                ⚠️ {{ page.license_notice }}
             </div>
+            {% endif %}
 
-            <!-- Vertical Divider -->
-            <div class="vertical-divider"></div>
-
-            <!-- Right Column - Deployment Guide -->
-            <div class="deployment-guide">
-                <h2>Deployment Guide</h2>
-                <div class="deployment-steps">
-                    {% for step in model.deployment.steps %}
-                    <div class="step">
-                        <h3>{{ step.name }}</h3>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                            <pre><code>{{ step.command }}</code></pre>
-                        </div>
-                    </div>
+            {% if page.tgi %}
+            <section class="architecture-section">
+                <h2>Architecture & Security</h2>
+                <div class="mermaid">
+                    {{ page.architecture_diagram }}
+                </div>
+                
+                <h3>Key Features</h3>
+                <ul class="feature-list">
+                    {% for feature in page.key_features %}
+                    <li>{{ feature }}</li>
                     {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
 
-                    <h2>Example Usage</h2>
-                    {% for example in model.examples %}
-                    <div class="example">
-                        <h3>{{ example.name }}</h3>
-                        <p>{{ example.description }}</p>
-                        <div class="code-block">
-                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                            <pre><code>{{ example.code }}</code></pre>
-                        </div>
+            <section class="model-info">
+                <h2>Model Information</h2>
+                <div class="info-grid">
+                    <div>
+                        <strong>Model:</strong> {{ page.model_id }}
                     </div>
-                    {% endfor %}
+                    <div>
+                        <strong>Context Window:</strong> {{ page.context_window }}
+                    </div>
+                </div>
 
-                    <h2>Best Practices</h2>
-                    <ul class="best-practices">
-                        {% for practice in model.best_practices %}
-                        <li>{{ practice }}</li>
-                        {% endfor %}
-                    </ul>
+                <h3>Strengths</h3>
+                <ul>
+                    {% for strength in page.strengths %}
+                    <li>{{ strength }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Optimal Use Cases</h3>
+                <ul>
+                    {% for use_case in page.use_cases %}
+                    <li>{{ use_case }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="configuration">
+                <h2>Configuration</h2>
+                <div class="code-block">
+                    <pre><code>{{ page.configuration }}</code></pre>
+                </div>
+            </section>
+
+            <section class="usage-examples">
+                <h2>Example Usage</h2>
+                {% for example in page.examples %}
+                <h3>{{ example.title }}</h3>
+                <div class="code-block">
+                    <pre><code>{{ example.code }}</code></pre>
+                </div>
+                {% endfor %}
+            </section>
+
+            <section class="best-practices">
+                <h2>Best Practices</h2>
+                <ul>
+                    {% for practice in page.best_practices %}
+                    <li>{{ practice }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+
+        <!-- Right section (30%) -->
+        <div class="deployment-steps">
+            <div class="sticky-content">
+                <h2>Deployment Steps</h2>
+                <div class="code-block">
+                    <pre><code>{{ page.deployment_steps }}</code></pre>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Include Mermaid for diagrams -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>
-function copyCode(button) {
-    const codeBlock = button.nextElementSibling.querySelector('code');
-    const text = codeBlock.textContent;
-    navigator.clipboard.writeText(text);
-    
-    button.textContent = 'Copied!';
-    setTimeout(() => {
-        button.textContent = 'Copy';
-    }, 2000);
-}
+    mermaid.initialize({ startOnLoad: true });
 </script> 
