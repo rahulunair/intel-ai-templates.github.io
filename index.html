@@ -6,7 +6,7 @@ title: Home
 <div class="hero">
     <div class="container">
         <h1>AI Templates</h1>
-        <p>Deploy AI models on Intel Tiber AI cloud with ease</p>
+        <p>Deploy AI models on <a href="https://cloud.intel.com" target="_blank" class="tiber-link">Intel Tiber AI cloud</a> with ease</p>
         <div class="search-container">
             <div class="search-box">
                 <svg class="search-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,28 +33,30 @@ title: Home
         {% assign models = site.data.model_list.models %}
         {% for model in models %}
         <div class="model-card" data-category="{{ model.category }}">
-            <div class="model-card-content">
+            <a href="{{ '/model/' | append: model.name | downcase | replace: ' ', '-' | relative_url }}" class="model-title">
                 <h3>{{ model.name }}</h3>
-                <p>{{ model.description }}</p>
-                <div class="tags">
-                    {% for tag in model.tags %}
-                    <button class="tag" 
-                            data-tag="{{ tag.label | downcase }}"
-                            style="background: {{ tag.color }}10; color: {{ tag.color }}; border: 1px solid {{ tag.color }}20;">
-                        {{ tag.label }}
-                    </button>
-                    {% endfor %}
-                </div>
+            </a>
+            <p>{{ model.description }}</p>
+            <div class="tags">
+                {% for tag in model.tags %}
+                <span class="tag" style="background: {{ tag.color }}20; color: {{ tag.color }}">
+                    {{ tag.label }}
+                </span>
+                {% endfor %}
             </div>
-            <div class="model-card-footer">
-                <a href="{{ '/model/' | append: model.name | downcase | replace: ' ', '-' | relative_url }}" class="view-details">
-                    View Details
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
+            <a href="{{ '/model/' | append: model.name | downcase | replace: ' ', '-' | relative_url }}" class="view-details">
+                View Details
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<footer class="footer">
+    <div class="container">
+        <p>Made with ❤️ by the Tiber AI Community</p>
+    </div>
+</footer>

@@ -25,7 +25,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 }
 
 /* Navbar */
@@ -56,24 +56,31 @@ body {
     background: var(--background);
     border-radius: 16px;
     box-shadow: var(--card-shadow);
-    transition: all 0.3s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid var(--gray-light);
     display: block;
     cursor: pointer;
     position: relative;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .model-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .model-card h3 {
     color: var(--primary);
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.model-card h3:hover {
+    text-decoration: underline;
 }
 
 /* Tags */
@@ -85,19 +92,20 @@ body {
 }
 
 .tag {
-    padding: 0.5rem 1rem;
+    padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 500;
-    cursor: pointer;
+    letter-spacing: 0.02em;
     transition: all 0.2s ease;
-    border: none;
+    cursor: pointer;
     position: relative;
     z-index: 2;
 }
 
 .tag:hover {
     transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .tag.active {
@@ -279,38 +287,34 @@ body {
 
 /* Update hero section */
 .hero {
-    background: linear-gradient(135deg, var(--hero-bg) 0%, #EEF2FF 100%);
-    padding: 6rem 0;
-    text-align: center;
-    margin-bottom: 3rem;
+    background: linear-gradient(to bottom, var(--hero-bg), #ffffff);
     position: relative;
-    overflow: hidden;
+    padding: 2.5rem 0;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239BA3AF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    inset: 0;
+    background-image: radial-gradient(var(--gray-light) 1px, transparent 1px);
+    background-size: 20px 20px;
     opacity: 0.5;
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
     color: var(--text);
-    font-weight: 800;
-    letter-spacing: -0.025em;
+    font-weight: 700;
 }
 
 .hero p {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: var(--text);
     opacity: 0.8;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 /* Search box styling */
@@ -437,15 +441,107 @@ body {
 }
 
 .view-details {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-light);
+    width: 100%;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     gap: 0.5rem;
-    color: var(--primary);
-    text-decoration: none;
     font-weight: 500;
     transition: gap 0.2s ease;
 }
 
 .view-details:hover {
     gap: 0.75rem;
+}
+
+.search-box.loading .search-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: translateY(-50%) rotate(0deg); }
+    to { transform: translateY(-50%) rotate(360deg); }
+} 
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .models-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .category-filters {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+}
+
+/* Add smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optional: Add a subtle animation when cards load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.model-card {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+} 
+
+/* Style the Tiber AI link */
+.tiber-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.tiber-link:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+/* Center the footer */
+.footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    color: var(--text);
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+.footer p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 } 
